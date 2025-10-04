@@ -1,5 +1,5 @@
-base_height = 15;
-base_spacing = 2;
+base_height = 10;
+base_spacing = 3;
 base_spacing_bottom = 5;
 pencil_diameter = 8; // .1
 wall_thickness = 1; // .1
