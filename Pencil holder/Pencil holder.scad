@@ -1,11 +1,12 @@
 base_height = 15;
 base_spacing = 2;
 base_spacing_bottom = 5;
-pencil_diameter = 9;
-wall_thickness = 1;
+pencil_diameter = 8; // .1
+wall_thickness = 1; // .1
 pencil_height = 40;
 pencil_count = 5;
-slice_angle = 45;
+slice_angle = 80;
+bottom_bump_depth = 2;
 
 /* [Hidden] */
 $fa = 1;
@@ -46,7 +47,7 @@ difference() {
     for (i = [0:pencil_count - 1]) {
         x = holder_r + base_spacing + base_spacing_bottom + (pencil_holder_diameter + base_spacing) * i;
         translate([x, base_depth / 2, base_height]) {
-            resize([pencil_diameter, pencil_diameter, 2]) {
+            resize([pencil_diameter, pencil_diameter, bottom_bump_depth  * 2]) {
                 sphere(d = pencil_diameter);
             }
         }
