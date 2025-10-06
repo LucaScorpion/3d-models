@@ -1,5 +1,6 @@
 base_height = 10;
-base_spacing = 3;
+base_spacing = 5;
+pencil_spacing = 3;
 base_spacing_bottom = 5;
 pencil_diameter = 8; // .1
 wall_thickness = 1; // .1
@@ -14,7 +15,7 @@ $fs = 0.4;
 
 // Calculated variables
 pencil_holder_diameter = pencil_diameter + wall_thickness * 2;
-base_width_top = base_spacing * (pencil_count + 1) + pencil_holder_diameter * pencil_count;
+base_width_top = base_spacing * 2 + pencil_spacing * (pencil_count - 1) + pencil_holder_diameter * pencil_count;
 base_depth_top = pencil_holder_diameter + base_spacing;
 base_width = base_width_top + base_spacing_bottom * 2;
 base_depth = base_depth_top + base_spacing_bottom * 2;
@@ -45,7 +46,7 @@ difference() {
     
     // Remove bottom of each pencil cylinder.
     for (i = [0:pencil_count - 1]) {
-        x = holder_r + base_spacing + base_spacing_bottom + (pencil_holder_diameter + base_spacing) * i;
+        x = holder_r + base_spacing + base_spacing_bottom + (pencil_holder_diameter + pencil_spacing) * i;
         translate([x, base_depth / 2, base_height]) {
             resize([pencil_diameter, pencil_diameter, bottom_bump_depth  * 2]) {
                 sphere(d = pencil_diameter);
@@ -57,7 +58,7 @@ difference() {
 // Pencil holder module
 holder_r = pencil_holder_diameter / 2;
 module pencil_holder(i) {
-    x = holder_r + base_spacing + base_spacing_bottom + (pencil_holder_diameter + base_spacing) * i;
+    x = holder_r + base_spacing + base_spacing_bottom + (pencil_holder_diameter + pencil_spacing) * i;
     
     translate([x, base_depth / 2, base_height - 0.001]) {
         difference() {
