@@ -1,18 +1,28 @@
 bottom_width = 200;
 top_width = 100;
 inner_height = 150;
-thickness = 7;
+thickness = 10;
 back_thickness = 3;
 back_width = 25;
 side_height = 10;
 
+groove_thickness = 5;
+groove_depth = 5;
+
 /* [Hidden] */
 
 depth = thickness + back_thickness;
-top_left = bottom_width - top_width + 10;
+top_left = bottom_width - top_width + side_height;
+groove_y = thickness / 2 - groove_thickness / 2;
 
 // Bottom.
-cube([bottom_width, depth, side_height]);
+
+difference() {
+    cube([bottom_width, depth, side_height]);
+    translate([-0.001, groove_y, side_height - groove_depth + 0.001]) {
+        cube([bottom_width + 0.001, groove_thickness, groove_depth]);
+    }
+}
 
 // Right.
 translate([bottom_width, 0, 0]) {
@@ -21,7 +31,12 @@ translate([bottom_width, 0, 0]) {
 
 // Top.
 translate([top_left, 0, inner_height]) {
-    cube([top_width, depth, side_height]);
+    difference() {
+        cube([top_width, depth, side_height]);
+        translate([-side_height, groove_y, -0.001]) {
+            cube([top_width + 0.001, groove_thickness, groove_depth]);
+        }
+    }
 }
 
 // Back.
