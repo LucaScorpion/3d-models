@@ -9,6 +9,8 @@ hooks_count = 2;
 
 /* [Hidden] */
 
+$fn = 16;
+
 // Preset dimensions.
 hook_width = 4.5;
 hole_distance = 40;
@@ -69,18 +71,46 @@ module hook() {
 }
 
 module box() {
+    module frontLeft() {
+        translate([wall_thickness / 2, container_depth - wall_thickness / 2, 0]) {
+            cylinder(h=container_height, d=wall_thickness);
+        }
+    }
+    
+    module frontRight() {
+        translate([container_width - wall_thickness / 2, container_depth - wall_thickness / 2, 0]) {
+            cylinder(h=container_height, d=wall_thickness);
+        }
+    }
+    
     // Back (hooks side).
     cube([container_width, hook_width, container_height]);
+    
     // Front.
-    translate([0, container_depth - wall_thickness, 0]) {
-        cube([container_width, wall_thickness, container_height]);
+    hull() {
+        translate([wall_thickness, container_depth - wall_thickness, 0]) {
+            cube([inner_width, wall_thickness, container_height]);
+        }
+        frontLeft();
+        frontRight();
     }
+    
     // Left.
-    cube([wall_thickness, container_depth, container_height]);
-    // Right.
-    translate([container_width - wall_thickness, 0, 0]) {
-        cube([wall_thickness, container_depth, container_height]);
+    hull() {
+        cube([wall_thickness, inner_depth + hook_width, container_height]);
+        frontLeft();
     }
+    
+    // Right.
+    hull() {
+        translate([container_width - wall_thickness, 0, 0]) {
+            cube([wall_thickness, inner_depth + hook_width, container_height]);
+        }
+        frontRight();
+    }
+    
     // Bottom.
-    cube([container_width, container_depth, bottom_thickness]);
+    translate([wall_thickness / 2, 0, 0]) {
+        cube([container_width - wall_thickness, container_depth - wall_thickness / 2, bottom_thickness]);
+    }
 }
