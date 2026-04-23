@@ -1,11 +1,13 @@
-inner_width = 80;
-inner_height = 20;
-inner_depth = 40;
+inner_width = 80; // .1
+inner_height = 20; // .1
+inner_depth = 40; // .1
 
-wall_thickness = 2;
-bottom_thickness = 2;
+wall_thickness = 2; // .1
+bottom_thickness = 2; // .1
 
 hooks_count = 2;
+
+/* [Hidden] */
 
 // Preset dimensions.
 hook_width = 4.5;
