@@ -2,8 +2,8 @@ inner_width = 80; // .1
 inner_height = 20; // .1
 inner_depth = 40; // .1
 
-wall_thickness = 2; // .1
-bottom_thickness = 2; // .1
+wall_thickness = 1.2; // .1
+bottom_thickness = 1.2; // .1
 
 hooks_count = 2;
 
