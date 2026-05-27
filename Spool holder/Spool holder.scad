@@ -15,14 +15,13 @@ difference() {
 }
 
 rotate_extrude() {
-    triangle(edge_size, outer_diameter / 2);
+    triangle(edge_size - 0.01, outer_diameter / 2);
 }
-
 
 translate([0, 0, height]) {
     mirror([0, 0, 1]) {
         rotate_extrude() {
-            triangle(edge_size, outer_diameter / 2);
+            triangle(edge_size - 0.01, outer_diameter / 2);
         }
     }
 }
