@@ -1,4 +1,4 @@
-inner_diameter = 22;
+inner_diameter = 22.4;
 thickness = 3;
 height = 90;
 edge_size = 5;
