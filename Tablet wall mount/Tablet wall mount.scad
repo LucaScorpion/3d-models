@@ -1,9 +1,9 @@
 // The dimensions of the tablet.
-tablet_height = 150;
+tablet_height = 169;
 tablet_thickness = 5;
 
 // The dimensions of the holder's top and bottom segments.
-bottom_width = 200;
+bottom_width = 169;
 top_width = 100;
 
 // The height (depth) of the groove lip
