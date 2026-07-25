@@ -7,7 +7,7 @@ bottom_width = 200;
 top_width = 100;
 
 // The height (depth) of the groove lip
-groove_height = 5;
+groove_height = 3;
 // The thickness of the groove lip, front and back.
 groove_thickness = 3;
 groove_thickness_back = 1;
@@ -47,7 +47,7 @@ cube([left_width, total_thickness, total_height]);
 translate([left_width, 0, total_height - top_height]) {
     difference() {
         cube([top_width, total_thickness, top_height]);
-        translate([-top_height, groove_thickness, -0.001]) {
+        translate([0, groove_thickness, -0.001]) {
             cube([top_width + 0.001, tablet_thickness, groove_height]);
         }
     }
