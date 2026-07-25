@@ -1,61 +1,78 @@
+// The dimensions of the tablet.
+tablet_height = 150;
+tablet_thickness = 5;
+
+// The dimensions of the holder's top and bottom segments.
 bottom_width = 200;
 top_width = 100;
-inner_height = 150;
-thickness = 10;
-back_thickness = 3;
-back_width = 25;
-side_height = 10;
 
-groove_thickness = 5;
-groove_depth = 5;
+// The height (depth) of the groove lip
+groove_height = 5;
+// The thickness of the groove lip, front and back.
+groove_thickness = 3;
+groove_thickness_back = 1;
+
+// The amount of material below and above the tablet in the groove.
+bottom_thickness = 5;
+top_thickness = 5;
+
+// The thickess and width of the supports on the back.
+support_thickness = 3;
+support_width = 25;
+
+left_width = 10;
 
 /* [Hidden] */
 
-depth = thickness + back_thickness;
-top_left = bottom_width - top_width + side_height;
-groove_y = thickness / 2 - groove_thickness / 2;
+total_thickness = support_thickness + groove_thickness_back + tablet_thickness + groove_thickness;
+total_height = bottom_thickness + tablet_height + top_thickness;
+inner_height = tablet_height - groove_height * 2;
+top_height = groove_height + top_thickness;
+bottom_height = groove_height + bottom_thickness;
 
 // Bottom.
-
-difference() {
-    cube([bottom_width, depth, side_height]);
-    translate([-0.001, groove_y, side_height - groove_depth + 0.001]) {
-        cube([bottom_width + 0.001, groove_thickness, groove_depth]);
-    }
-}
-
-// Right.
-translate([bottom_width, 0, 0]) {
-    cube([10, depth, inner_height]);
-}
-
-// Top.
-translate([top_left, 0, inner_height]) {
+translate([left_width, 0, 0]) {
     difference() {
-        cube([top_width, depth, side_height]);
-        translate([-side_height, groove_y, -0.001]) {
-            cube([top_width + 0.001, groove_thickness, groove_depth]);
+        cube([bottom_width, total_thickness, bottom_height]);
+        translate([0, groove_thickness, bottom_height - groove_height + 0.001]) {
+            cube([bottom_width + 0.001, tablet_thickness, groove_height]);
         }
     }
 }
 
-// Back.
-translate([0, thickness, side_height]) {
-    // Straight up.
-    translate([top_left + back_width, 0, 0]) {
-        cube([back_width, back_thickness, inner_height - side_height]);
+// Left.
+cube([left_width, total_thickness, total_height]);
+
+// Top.
+translate([left_width, 0, total_height - top_height]) {
+    difference() {
+        cube([top_width, total_thickness, top_height]);
+        translate([-top_height, groove_thickness, -0.001]) {
+            cube([top_width + 0.001, tablet_thickness, groove_height]);
+        }
     }
-    
-    // Bottom left to top left.
+}
+
+// Supports.
+translate([0, total_thickness - support_thickness, bottom_height]) {
+    top_right = left_width + top_width - support_width;
+    bottom_right = left_width + bottom_width;
+
+    // Straight up.
+    translate([top_right - support_width, 0, 0]) {
+        cube([support_width, support_thickness, inner_height]);
+    }
+
+    // Bottom right to top right.
     points = [
-      [  0,  0,  0 ], // 0
-      [ back_width,  0,  0 ], // 1
-      [ back_width,  back_thickness,  0 ], // 2
-      [ 0,  back_thickness,  0 ], // 3
-      [ top_left,  0,  inner_height - side_height ], // 4
-      [ top_left + back_width,  0,  inner_height - side_height ], // 5
-      [ top_left + back_width,  back_thickness,  inner_height - side_height ], // 6
-      [ top_left,  back_thickness,  inner_height - side_height ], // 7
+      [bottom_right - support_width, 0, 0], // 0
+      [bottom_right, 0, 0], // 1
+      [bottom_right, support_thickness, 0], // 2
+      [bottom_right - support_width, support_thickness, 0], // 3
+      [top_right, 0, inner_height], // 4
+      [top_right + support_width, 0, inner_height], // 5
+      [top_right + support_width, support_thickness, inner_height], // 6
+      [top_right, support_thickness, inner_height], // 7
     ];
     faces = [
       [0,1,2,3], // Bottom
