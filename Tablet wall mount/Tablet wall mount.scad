@@ -16,11 +16,14 @@ groove_thickness_back = 1;
 bottom_thickness = 5;
 top_thickness = 5;
 
-// The thickess and width of the supports on the back.
+// The thickness and width of the supports on the back.
 support_thickness = 3;
 support_width = 25;
 
-left_width = 10;
+left_width = 17;
+
+angle_plug_height = 14;
+angle_plug_thickness = 10;
 
 /* [Hidden] */
 
@@ -33,12 +36,9 @@ top_height = groove_height + top_thickness;
 bottom_height = groove_height + bottom_thickness;
 
 // Left.
-hull() {
-    translate([0, 0, bottom_height]) {
-        cube([left_width, total_thickness, inner_height]);
-    }
-    bottomLeft();
-    topLeft();
+difference() {
+    left();
+    plug();
 }
 
 // Bottom.
@@ -105,6 +105,23 @@ translate([0, total_thickness - support_thickness, bottom_height]) {
 }
 
 /* Modules */
+
+module plug() {
+    angle_plug_y = groove_thickness + tablet_thickness / 2 - angle_plug_thickness / 2;
+    translate([-0.001, angle_plug_y, bottom_height + inner_height / 2]) {
+        cube([left_width + 0.002, angle_plug_thickness, angle_plug_height]);
+    }
+}
+
+module left() {
+    hull() {
+        translate([0, 0, bottom_height]) {
+            cube([left_width, total_thickness, inner_height]);
+        }
+        bottomLeft();
+        topLeft();
+    }
+}
 
 module bottomLeft() {
     translate([left_width / 2, 0, bottom_height / 2]) {
