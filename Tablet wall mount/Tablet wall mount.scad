@@ -37,6 +37,11 @@ translate([left_width, 0, 0]) {
         translate([0, groove_thickness, bottom_height - groove_height + 0.001]) {
             cube([bottom_width + 0.001, tablet_thickness, groove_height]);
         }
+        translate([0, 0, bottom_height + 0.001]) {
+            mirror([0, 0, 1]) {
+                prism(bottom_width + 0.001, groove_thickness + 0.001, groove_height);
+            }
+        }
     }
 }
 
@@ -83,4 +88,17 @@ translate([0, total_thickness - support_thickness, bottom_height]) {
       [7,4,0,3], // Left
     ];
     polyhedron(points, faces);
+}
+
+module prism(l, w, h) {
+    polyhedron(
+        points=[[0,0,0], [0,w,h], [l,w,h], [l,0,0], [0,w,0], [l,w,0]],
+        faces=[
+            [0,1,2,3], // Top sloping face
+            [2,1,4,5], // Vertical rectangular face
+            [0,3,5,4], // Bottom face
+            [0,4,1], // Rear triangular face
+            [3,2,5], // Front triangular face
+        ]
+    );
 }
