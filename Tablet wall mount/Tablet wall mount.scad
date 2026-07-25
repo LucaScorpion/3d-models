@@ -1,6 +1,6 @@
 // The dimensions of the tablet.
 tablet_height = 169;
-tablet_thickness = 5;
+tablet_thickness = 7;
 
 // The dimensions of the holder's top and bottom segments.
 bottom_width = 169;
