@@ -4,7 +4,7 @@ tablet_thickness = 7;
 
 // The dimensions of the holder's top and bottom segments.
 bottom_width = 169;
-top_width = 100;
+top_width = 120;
 
 // The height (depth) of the groove lip
 groove_height = 3;
@@ -13,8 +13,8 @@ groove_thickness = 3;
 groove_thickness_back = 1;
 
 // The amount of material below and above the tablet in the groove.
-bottom_thickness = 5;
-top_thickness = 5;
+bottom_thickness = 4;
+top_thickness = 4;
 
 // The size of the supports on the back.
 support_thickness = 3;
