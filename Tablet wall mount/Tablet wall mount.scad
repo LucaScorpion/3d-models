@@ -35,6 +35,11 @@ cable_width = 13;
 // How much material to keep left of angle plug.
 angle_plug_left = 3;
 
+// Diameter of the screw holes.
+screw_hole_size = 3;
+// Distance from the sides to the screw holes on the vertical support.
+screw_hole_distance = 10;
+
 /* [Hidden] */
 
 $fn = 32;
@@ -64,7 +69,15 @@ translate([0, total_thickness - support_thickness, bottom_height]) {
 
     // Straight up.
     translate([top_right - support_width, 0, 0]) {
-        cube([support_width, support_thickness, inner_height]);
+        difference() {
+            cube([support_width, support_thickness, inner_height]);
+            translate([support_width / 2, 0, screw_hole_distance]) {
+                screw_hole();
+            }
+            translate([support_width / 2, 0, inner_height - screw_hole_distance]) {
+                screw_hole();
+            }
+        }
     }
 
     // Bottom right to top right.
@@ -86,10 +99,23 @@ translate([0, total_thickness - support_thickness, bottom_height]) {
       [6,7,3,2], // Back
       [7,4,0,3], // Left
     ];
-    polyhedron(points, faces);
+    difference() {
+        polyhedron(points, faces);
+        translate([top_right + (bottom_right - top_right) / 2, 0, inner_height / 2]) {
+            screw_hole();
+        }
+    }
 }
 
 /* Modules */
+
+module screw_hole() {
+    translate([0, -0.001, 0]) {
+        rotate([-90, 0, 0]) {
+            cylinder(support_thickness + 0.002, d = screw_hole_size);
+        }
+    }
+}
 
 module plug() {
     center_y = groove_thickness + tablet_thickness / 2;
