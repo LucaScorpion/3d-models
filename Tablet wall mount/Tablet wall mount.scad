@@ -24,7 +24,7 @@ support_width = 25;
 angle_plug_thickness = 10;
 angle_plug_width= 17;
 // The height of the top angled part of the plug.
-angle_plug_top_height = 14;
+angle_plug_top_height = 15;
 // How far to the side the top angled part of the plug extends.
 angle_plug_top_width = 5;
 
@@ -127,6 +127,15 @@ module plug() {
         bottom_height + inner_height / 2,
     ]) {
         cube([left_width + 0.002, angle_plug_thickness, angle_plug_top_height]);
+    }
+
+    // Room above the plug.
+    translate([
+        -0.001,
+        center_y - angle_plug_thickness / 2,
+        bottom_height + inner_height / 2 + angle_plug_top_height - 0.001,
+    ]) {
+        cube([angle_plug_width, angle_plug_thickness, angle_plug_top_height]);
     }
 
     // The cable running up to the angle plug.
