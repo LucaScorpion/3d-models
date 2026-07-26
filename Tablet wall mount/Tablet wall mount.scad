@@ -70,6 +70,9 @@ difference() {
     translate([left_width, groove_thickness, total_height - top_height - 0.001]) {
         cube([top_width + 0.001, tablet_thickness, groove_height]);
     }
+    translate([left_width, 0, total_height - top_height - 0.001]) {
+        prism(top_width + 0.001, groove_thickness + 0.001, groove_height);
+    }
 }
 
 // Supports.
