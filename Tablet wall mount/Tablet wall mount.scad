@@ -16,14 +16,24 @@ groove_thickness_back = 1;
 bottom_thickness = 5;
 top_thickness = 5;
 
-// The thickness and width of the supports on the back.
+// The size of the supports on the back.
 support_thickness = 3;
 support_width = 25;
 
-left_width = 17;
-
-angle_plug_height = 14;
+// The size of the angle plug
 angle_plug_thickness = 10;
+angle_plug_width= 17;
+// The height of the top angled part of the plug.
+angle_plug_top_height = 14;
+// How far to the side the top angled part of the plug extends.
+angle_plug_top_width = 5;
+
+// The size of the cable going up to the angle plug.
+cable_thickness = 7;
+cable_width = 13;
+
+// How much material to keep left of angle plug.
+angle_plug_left = 3;
 
 /* [Hidden] */
 
@@ -34,45 +44,17 @@ total_height = bottom_thickness + tablet_height + top_thickness;
 inner_height = tablet_height - groove_height * 2;
 top_height = groove_height + top_thickness;
 bottom_height = groove_height + bottom_thickness;
+left_width = angle_plug_width + angle_plug_left;
+angle_plug_bottom_width = angle_plug_width - angle_plug_top_width;
 
-// Left.
 difference() {
-    left();
+    // Main body.
+    union() {
+        left();
+        bottom();
+        top();
+    }
     plug();
-}
-
-// Bottom.
-difference() {
-    hull() {
-        translate([left_width, 0, 0]) {
-            cube([bottom_width, total_thickness, bottom_height]);
-        }
-        bottomLeft();
-    }
-    translate([left_width, groove_thickness, bottom_height - groove_height + 0.001]) {
-        cube([bottom_width + 0.001, tablet_thickness, groove_height]);
-    }
-    translate([left_width, 0, bottom_height + 0.001]) {
-        mirror([0, 0, 1]) {
-            prism(bottom_width + 0.001, groove_thickness + 0.001, groove_height);
-        }
-    }
-}
-
-// Top.
-difference() {
-    hull() {
-        translate([left_width, 0, total_height - top_height]) {
-            cube([top_width, total_thickness, top_height]);
-        }
-        topLeft();
-    }
-    translate([left_width, groove_thickness, total_height - top_height - 0.001]) {
-        cube([top_width + 0.001, tablet_thickness, groove_height]);
-    }
-    translate([left_width, 0, total_height - top_height - 0.001]) {
-        prism(top_width + 0.001, groove_thickness + 0.001, groove_height);
-    }
 }
 
 // Supports.
@@ -110,9 +92,24 @@ translate([0, total_thickness - support_thickness, bottom_height]) {
 /* Modules */
 
 module plug() {
-    angle_plug_y = groove_thickness + tablet_thickness / 2 - angle_plug_thickness / 2;
-    translate([-0.001, angle_plug_y, bottom_height + inner_height / 2]) {
-        cube([left_width + 0.002, angle_plug_thickness, angle_plug_height]);
+    center_y = groove_thickness + tablet_thickness / 2;
+
+    // Angle plug top part.
+    translate([
+        -0.001,
+        center_y - angle_plug_thickness / 2,
+        bottom_height + inner_height / 2,
+    ]) {
+        cube([left_width + 0.002, angle_plug_thickness, angle_plug_top_height]);
+    }
+
+    // The cable running up to the angle plug.
+    translate([
+        angle_plug_left - (cable_width - angle_plug_bottom_width) / 2,
+        center_y - cable_thickness / 2,
+        -0.001,
+    ]) {
+        cube([cable_width, cable_thickness, bottom_height + inner_height / 2 + 0.002]);
     }
 }
 
@@ -123,6 +120,42 @@ module left() {
         }
         bottomLeft();
         topLeft();
+    }
+}
+
+module bottom() {
+    difference() {
+        hull() {
+            translate([left_width, 0, 0]) {
+                cube([bottom_width, total_thickness, bottom_height]);
+            }
+            bottomLeft();
+        }
+        translate([left_width, groove_thickness, bottom_height - groove_height + 0.001]) {
+            cube([bottom_width + 0.001, tablet_thickness, groove_height]);
+        }
+        translate([left_width, 0, bottom_height + 0.001]) {
+            mirror([0, 0, 1]) {
+                prism(bottom_width + 0.001, groove_thickness + 0.001, groove_height);
+            }
+        }
+    }
+}
+
+module top() {
+    difference() {
+        hull() {
+            translate([left_width, 0, total_height - top_height]) {
+                cube([top_width, total_thickness, top_height]);
+            }
+            topLeft();
+        }
+        translate([left_width, groove_thickness, total_height - top_height - 0.001]) {
+            cube([top_width + 0.001, tablet_thickness, groove_height]);
+        }
+        translate([left_width, 0, total_height - top_height - 0.001]) {
+            prism(top_width + 0.001, groove_thickness + 0.001, groove_height);
+        }
     }
 }
 
