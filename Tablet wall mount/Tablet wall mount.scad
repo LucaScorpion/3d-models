@@ -128,18 +128,18 @@ module left() {
 
 module bottomLeft() {
     translate([left_width / 2, 0, bottom_height / 2]) {
-        scale([left_width / 2, 1, bottom_height / 2]) {
+        scale([left_width, 1, bottom_height]) {
             rotate([-90, 0, 0]) {
-                cylinder(total_thickness, r = 1);
+                cylinder(total_thickness, d = 1);
             }
         }
     }
 }
 module topLeft() {
     translate([left_width / 2, 0, total_height - top_height / 2]) {
-        scale([left_width / 2, 1, top_height / 2]) {
+        scale([left_width, 1, top_height]) {
             rotate([-90, 0, 0]) {
-                cylinder(total_thickness, r = 1);
+                cylinder(total_thickness, d = 1);
             }
         }
     }
