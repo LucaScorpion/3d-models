@@ -140,6 +140,15 @@ module plug() {
         cube([angle_plug_bottom_width, angle_plug_thickness, angle_plug_bottom_height + 0.001]);
     }
 
+    // The cable running up to the angle plug.
+    translate([
+        angle_plug_left - (cable_width - angle_plug_bottom_width) / 2,
+        center_y - cable_thickness / 2,
+        -0.001,
+    ]) {
+        cube([cable_width, cable_thickness, plug_z - angle_plug_bottom_height + 0.002]);
+    }
+
     // Room above the plug.
     translate([
         -0.001,
@@ -149,13 +158,15 @@ module plug() {
         cube([angle_plug_width, angle_plug_thickness, angle_plug_top_height]);
     }
 
-    // The cable running up to the angle plug.
+    // Angled guiding section above the plug.
     translate([
-        angle_plug_left - (cable_width - angle_plug_bottom_width) / 2,
-        center_y - cable_thickness / 2,
-        -0.001,
+        angle_plug_width - 0.001,
+        center_y - angle_plug_thickness / 2,
+        plug_z + angle_plug_height + angle_plug_top_height - 0.002,
     ]) {
-        cube([cable_width, cable_thickness, plug_z - angle_plug_bottom_height + 0.002]);
+        rotate([0, 0, 90]) {
+            prism(angle_plug_thickness, angle_plug_width, angle_plug_top_height);
+        }
     }
 }
 
