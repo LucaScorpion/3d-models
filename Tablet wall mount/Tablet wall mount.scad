@@ -100,9 +100,26 @@ translate([0, total_thickness - support_thickness, bottom_height]) {
       [6,7,3,2], // Back
       [7,4,0,3], // Left
     ];
+
+    angle = atan2(bottom_right - top_right, inner_height);
+    diag_screw_offset = tan(angle) * screw_hole_distance - screw_hole_size / 2;
+
     difference() {
         polyhedron(points, faces);
-        translate([top_right + (bottom_right - top_right) / 2, 0, inner_height / 2]) {
+        // Bottom screw hole.
+        translate([
+            bottom_right - support_width / 2 - diag_screw_offset,
+            0,
+            screw_hole_distance,
+        ]) {
+            screw_hole();
+        }
+        // Top screw hole.
+        translate([
+            top_right + support_width / 2 + diag_screw_offset,
+            0,
+            inner_height - screw_hole_distance,
+        ]) {
             screw_hole();
         }
     }
