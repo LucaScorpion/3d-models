@@ -25,10 +25,9 @@ angle_plug_thickness = 10;
 angle_plug_width= 17;
 // The height of the top angled part of the plug.
 angle_plug_top_height = 15;
-// The height of the bottom straight part of the plug.
+// The size of the bottom straight part of the plug.
 angle_plug_bottom_height = 8;
-// How far to the side the top angled part of the plug extends.
-angle_plug_top_width = 5;
+angle_plug_bottom_width = 12;
 
 // The size of the cable going up to the angle plug.
 cable_thickness = 7;
@@ -52,7 +51,6 @@ inner_height = tablet_height - groove_height * 2;
 top_height = groove_height + top_thickness;
 bottom_height = groove_height + bottom_thickness;
 left_width = angle_plug_width + angle_plug_left;
-angle_plug_bottom_width = angle_plug_width - angle_plug_top_width;
 angle_plug_height = angle_plug_top_height + angle_plug_bottom_height;
 
 difference() {
@@ -133,6 +131,15 @@ module plug() {
         cube([left_width + 0.002, angle_plug_thickness, angle_plug_height]);
     }
 
+    // Angle plug bottom part.
+    translate([
+        angle_plug_left,
+        center_y - angle_plug_thickness / 2,
+        plug_z - angle_plug_bottom_height,
+    ]) {
+        cube([angle_plug_bottom_width, angle_plug_thickness, angle_plug_bottom_height + 0.001]);
+    }
+
     // Room above the plug.
     translate([
         -0.001,
@@ -148,7 +155,7 @@ module plug() {
         center_y - cable_thickness / 2,
         -0.001,
     ]) {
-        cube([cable_width, cable_thickness, plug_z + 0.002]);
+        cube([cable_width, cable_thickness, plug_z - angle_plug_bottom_height + 0.002]);
     }
 }
 
