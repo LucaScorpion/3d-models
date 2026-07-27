@@ -25,6 +25,8 @@ angle_plug_thickness = 10;
 angle_plug_width= 17;
 // The height of the top angled part of the plug.
 angle_plug_top_height = 15;
+// The height of the bottom straight part of the plug.
+angle_plug_bottom_height = 8;
 // How far to the side the top angled part of the plug extends.
 angle_plug_top_width = 5;
 
@@ -51,6 +53,7 @@ top_height = groove_height + top_thickness;
 bottom_height = groove_height + bottom_thickness;
 left_width = angle_plug_width + angle_plug_left;
 angle_plug_bottom_width = angle_plug_width - angle_plug_top_width;
+angle_plug_height = angle_plug_top_height + angle_plug_bottom_height;
 
 difference() {
     // Main body.
@@ -126,14 +129,14 @@ module plug() {
         center_y - angle_plug_thickness / 2,
         bottom_height + inner_height / 2,
     ]) {
-        cube([left_width + 0.002, angle_plug_thickness, angle_plug_top_height]);
+        cube([left_width + 0.002, angle_plug_thickness, angle_plug_height]);
     }
 
     // Room above the plug.
     translate([
         -0.001,
         center_y - angle_plug_thickness / 2,
-        bottom_height + inner_height / 2 + angle_plug_top_height - 0.001,
+        bottom_height + inner_height / 2 + angle_plug_height - 0.001,
     ]) {
         cube([angle_plug_width, angle_plug_thickness, angle_plug_top_height]);
     }
