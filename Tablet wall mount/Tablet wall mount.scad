@@ -69,7 +69,7 @@ translate([0, total_thickness - support_thickness, bottom_height]) {
     bottom_right = left_width + bottom_width;
 
     // Straight up.
-    translate([top_right - support_width, 0, 0]) {
+    translate([left_width, 0, 0]) {
         difference() {
             cube([support_width, support_thickness, inner_height]);
             translate([support_width / 2, 0, screw_hole_distance]) {
