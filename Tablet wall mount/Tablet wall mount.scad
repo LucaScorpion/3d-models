@@ -146,7 +146,7 @@ module plug() {
         center_y - cable_thickness / 2,
         -0.001,
     ]) {
-        cube([cable_width, cable_thickness, plug_z - angle_plug_bottom_height + 0.002]);
+        cube([cable_width, cable_thickness, plug_z + 0.002]);
     }
 
     // Room above the plug.
