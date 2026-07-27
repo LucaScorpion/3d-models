@@ -122,12 +122,13 @@ module screw_hole() {
 
 module plug() {
     center_y = groove_thickness + tablet_thickness / 2;
+    plug_z = bottom_height + inner_height / 2 - angle_plug_top_height / 2;
 
     // Angle plug top part.
     translate([
         -0.001,
         center_y - angle_plug_thickness / 2,
-        bottom_height + inner_height / 2,
+        plug_z,
     ]) {
         cube([left_width + 0.002, angle_plug_thickness, angle_plug_height]);
     }
@@ -136,7 +137,7 @@ module plug() {
     translate([
         -0.001,
         center_y - angle_plug_thickness / 2,
-        bottom_height + inner_height / 2 + angle_plug_height - 0.001,
+        plug_z + angle_plug_height - 0.001,
     ]) {
         cube([angle_plug_width, angle_plug_thickness, angle_plug_top_height]);
     }
@@ -147,7 +148,7 @@ module plug() {
         center_y - cable_thickness / 2,
         -0.001,
     ]) {
-        cube([cable_width, cable_thickness, bottom_height + inner_height / 2 + 0.002]);
+        cube([cable_width, cable_thickness, plug_z + 0.002]);
     }
 }
 
