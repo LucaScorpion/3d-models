@@ -37,7 +37,7 @@ cable_width = 13;
 angle_plug_left = 3;
 
 // Diameter of the screw holes.
-screw_hole_size = 4;
+screw_hole_size = 5;
 // Distance from the sides to the screw holes on the vertical support.
 screw_hole_distance = 10;
 
